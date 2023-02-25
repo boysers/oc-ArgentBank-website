@@ -1,0 +1,45 @@
+.TransactionCard {
+  border-top-left-radius: 50px;
+  overflow: hidden;
+  border-collapse: separate;
+
+  &__details {
+    display: none;
+
+    &--open {
+      display: block;
+    }
+  }
+
+  & > td {
+    background-color: hsl(158, 100%, 27%);
+    color: hsl(160, 100%, 99%);
+
+    &:nth-child(1),
+    &:nth-child(2) {
+      text-align: left;
+    }
+    &:not(&:nth-child(2), &:nth-child(5)) {
+      width: 1%;
+      white-space: nowrap;
+    }
+    &:nth-child(5) {
+      text-align: -webkit-right;
+    }
+  }
+
+  &__Icon {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transform: rotate(0);
+
+    &--open {
+      transform: rotate(180deg);
+    }
+    & > img {
+      width: 24px;
+      height: auto;
+    }
+  }
+}
