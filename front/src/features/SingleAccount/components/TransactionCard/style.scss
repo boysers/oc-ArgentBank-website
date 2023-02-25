@@ -19,12 +19,14 @@
     &:nth-child(2) {
       text-align: left;
     }
-    &:not(&:nth-child(2), &:nth-child(5)) {
+    &:not(&:nth-child(2)) {
       width: 1%;
       white-space: nowrap;
     }
     &:nth-child(5) {
-      text-align: -webkit-right;
+      th {
+        text-align: right;
+      }
     }
   }
 
