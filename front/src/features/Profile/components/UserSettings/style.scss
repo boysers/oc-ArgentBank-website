@@ -1,4 +1,10 @@
 .UserSettings {
+  .wrapper-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   input[type='text'] {
     padding: 8px;
   }
@@ -6,5 +12,9 @@
   input[type='submit'] {
     margin: 0 6px;
     min-width: 100px;
+
+    &:disabled {
+      background-color: rgb(145, 175, 164);
+    }
   }
 }

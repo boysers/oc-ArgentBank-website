@@ -1,11 +1,11 @@
 import { Navigate, RouteObject } from 'react-router-dom'
-import { HomeLayout, ProtectedLayout } from './layouts'
 import { Home, Profile, SignIn, SingleAccount } from './features'
+import { DashboardContainer, HomeContainer } from './containers'
 
 export const routes: RouteObject[] = [
   {
     path: '/',
-    element: <HomeLayout />,
+    element: <HomeContainer />,
     children: [
       {
         index: true,
@@ -19,7 +19,7 @@ export const routes: RouteObject[] = [
   },
   {
     path: 'dashboard',
-    element: <ProtectedLayout />,
+    element: <DashboardContainer />,
     children: [
       {
         index: true,
