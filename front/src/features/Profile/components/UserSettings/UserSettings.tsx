@@ -20,8 +20,8 @@ export const UserSettings: React.FC<UserSettingsProps> = ({ onClose }) => {
       await wait(1500)
       setLoading(false)
       dispatch(updateUserName(input.current.value))
-      onClose()
     }
+    onClose()
   }, [dispatch, onClose, profile.userName])
 
   useEffect(() => {
