@@ -1,12 +1,11 @@
 import { useState } from 'react'
+import { useSelector } from '../../hooks'
 import { AccountList, UserSettings } from './components'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../redux/store'
 
 export const Profile: React.FC = () => {
   const [isOpenSettings, setIsOpenSettings] = useState(false)
   const onClose = () => setIsOpenSettings((prev) => !prev)
-  const userName = useSelector((state: RootState) => state.profile.userName)
+  const userName = useSelector((state) => state.profile.userName)
   return (
     <>
       <div className="header">

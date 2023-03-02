@@ -1,17 +1,16 @@
 import './style.scss'
 import { useEffect, useRef, useCallback, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from '../../../../redux/store'
 import { updateUserName } from '../../../../redux/profileSlice'
 import { wait } from '../../../../utils'
 import { Loader } from '../../../../components'
+import { useDispatch, useSelector } from '../../../../hooks'
 
 type UserSettingsProps = { onClose: () => void }
 
 export const UserSettings: React.FC<UserSettingsProps> = ({ onClose }) => {
   const [loading, setLoading] = useState(false)
-  const profile = useSelector((state: RootState) => state.profile)
-  const dispatch = useDispatch<AppDispatch>()
+  const profile = useSelector((state) => state.profile)
+  const dispatch = useDispatch()
   const input = useRef<HTMLInputElement>(null)
 
   const onClickUpdateUserName = useCallback(async () => {

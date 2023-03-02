@@ -1,27 +1,87 @@
-import { Link } from 'react-router-dom'
+import { MouseEvent, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import styles from './SignIn.module.scss'
+import { wait } from '../../utils'
+import { login } from '../../redux/authSlice'
+import { useDispatch } from '../../hooks'
+import { Loader } from '../../components'
 
 export const SignIn: React.FC = () => {
+  const [error, setError] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
+
+  const email = useRef<HTMLInputElement>(null)
+  const password = useRef<HTMLInputElement>(null)
+  const rememberMe = useRef<HTMLInputElement>(null)
+
+  const navigate = useNavigate()
+
+  const dispatch = useDispatch()
+
+  const handleLogin = async (e: MouseEvent) => {
+    e.preventDefault()
+
+    if (!email.current?.value || !password.current?.value) {
+      setError('Missing email or password')
+      return
+    } else if (error !== '') setError('')
+
+    const formData = {
+      email: email.current?.value,
+      password: password.current?.value
+    }
+
+    setLoading(true)
+
+    await wait(1500)
+
+    setLoading(false)
+
+    const token = 'myFakeToken'
+
+    if (rememberMe.current?.checked === true) {
+      localStorage.setItem('token', token)
+    }
+
+    dispatch(login(token))
+
+    navigate('/dashboard/profile')
+  }
+
   return (
     <section className="sign-in-content">
       <i className="fa fa-user-circle sign-in-icon"></i>
       <h1>Sign In</h1>
       <form>
         <div className="input-wrapper">
-          <label htmlFor="username">Username</label>
-          <input type="text" id="username" />
+          <label htmlFor="username">Email</label>
+          <input type="text" id="username" ref={email} />
         </div>
         <div className="input-wrapper">
           <label htmlFor="password">Password</label>
-          <input type="password" id="password" />
+          <input type="password" id="password" ref={password} />
         </div>
         <div className="input-remember">
-          <input type="checkbox" id="remember-me" />
+          <input type="checkbox" id="remember-me" ref={rememberMe} />
           <label htmlFor="remember-me">Remember me</label>
         </div>
+        {error && <p className={styles.error}>{error}</p>}
+        {loading && (
+          <div className={styles.loaderContainer}>
+            <Loader size="small" />
+          </div>
+        )}
         {/* <!-- PLACEHOLDER DUE TO STATIC SITE --> */}
-        <Link to="/dashboard/profile" className="sign-in-button">
+        {/* <Link to="/dashboard/profile" className="sign-in-button">
           Sign In
-        </Link>
+        </Link> */}
+        <button
+          onClick={handleLogin}
+          className="sign-in-button"
+          disabled={loading}
+        >
+          Sign In
+        </button>
         {/* <!-- SHOULD BE THE BUTTON BELOW --> */}
         {/* <!-- <button className="sign-in-button">Sign In</button> --> */}
         {/* <!--  --> */}

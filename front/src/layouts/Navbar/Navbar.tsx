@@ -1,15 +1,16 @@
 import './style.scss'
-import { Link } from 'react-router-dom'
 import argentBankLogo from '../../assets/img/argentBankLogo.png'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from '../../redux/store'
+import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from '../../hooks'
 import { logout } from '../../redux/authSlice'
 import { resetStateProfile } from '../../redux/profileSlice'
 
 export const Navbar: React.FC = () => {
-  const { auth, profile } = useSelector((state: RootState) => state)
-  const dispatch = useDispatch<AppDispatch>()
+  const { auth, profile } = useSelector((state) => state)
+  const dispatch = useDispatch()
+
   let isAuth = auth.isAuthenticated
+
   return (
     <nav className="main-nav">
       <Link to={isAuth ? '/dashboard' : '/'} className="main-nav-logo">

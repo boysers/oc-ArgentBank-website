@@ -1,20 +1,35 @@
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from '../../hooks'
 import { fetchProfile } from '../../redux/profileSlice'
-import { AppDispatch, RootState } from '../../redux/store'
-import { LoaderLayout, ProtectedLayout } from '../../layouts'
 import { login } from '../../redux/authSlice'
+import { LoaderLayout, ProtectedLayout } from '../../layouts'
 
 export const DashboardContainer: React.FC = () => {
-  const { loading } = useSelector((state: RootState) => state.profile)
-  const dispatch = useDispatch<AppDispatch>()
+  const { profile, auth } = useSelector((state) => state)
+
+  const dispatch = useDispatch()
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
-      dispatch(login('myFakeToken'))
       await dispatch(fetchProfile())
     }
     fetchData()
   }, [dispatch])
-  return <>{loading ? <LoaderLayout /> : <ProtectedLayout />}</>
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+
+    if (token) {
+      dispatch(login(token))
+      return
+    }
+
+    if (!auth.isAuthenticated) {
+      navigate('/signin')
+    }
+  }, [auth.isAuthenticated, navigate])
+  return <>{profile.loading ? <LoaderLayout /> : <ProtectedLayout />}</>
 }
