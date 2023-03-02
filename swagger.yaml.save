@@ -66,7 +66,7 @@ paths:
       summary: User Profile API
       description: API for fetching a user profile
       #produces:
-      # - application/json
+       # - application/json
       responses:
         '200':
           description: User profile retrieved successully
@@ -99,48 +99,6 @@ paths:
             $ref: '#/definitions/ApiResponse'
         '400':
           description: Invalid Fields
-        '500':
-          description: Internal Server Error
-  /user/accounts:
-    get:
-      security:
-        - Bearer: []
-      tags:
-        - User Module
-      summary: User Accounts API
-      description: API for getting a user accounts
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: User transactions history retrieved successfully
-          schema:
-            type: array
-            items: 
-              $ref: '#/definitions/UserAccounts'
-        '500':
-          description: Internal Server Error
-  /user/accounts/{accountId}:
-    get:
-      security:
-        - Bearer: []
-      tags:
-        - User Module
-      summary: User Account API
-      description: API for getting a account
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: accountId
-          required: true
-          type: string
-          description: The ID of the account to return.
-      responses:
-        '200':
-          description: Account retrieved successfully
-          schema:
-            $ref: '#/definitions/Account'
         '500':
           description: Internal Server Error
 securityDefinitions:
@@ -198,63 +156,3 @@ definitions:
     properties:
       userName:
         type: string
-  UserAccounts:
-    type: object
-    properties:
-      id:
-        type: string
-        description: "account id"
-      title:
-        type: string
-      amount:
-        type: string
-        format: currency
-      description:
-        type: string
-      transactions:
-        type: array
-        items:
-          type: object
-          properties: 
-            id: 
-              type: string
-              description: "transaction id"
-            ref:
-              type: string
-              example: "transaction"
-  Account:
-    type: object
-    properties:
-      id:
-        type: string
-        description: "account id"
-      title:
-        type: string
-      amount:
-        type: string
-        format: currency
-      description:
-        type: string
-      transactions:
-        type: array
-        items:
-          type: object
-          properties:
-            date:
-              type: string
-              format: date-time
-            description:
-              type: string
-            amount:
-              type: string
-              format: currency
-            balance:
-              type: string
-              format: currency
-            type:
-              type: string
-            category:
-              type: string
-            note:
-              type: string
-              description: additional user notes
