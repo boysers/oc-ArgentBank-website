@@ -1,9 +1,11 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from '../../hooks'
-import { fetchProfile } from '../../redux/profileSlice'
+import { getProfile } from '../../redux/profileSlice'
 import { login } from '../../redux/authSlice'
 import { LoaderLayout, ProtectedLayout } from '../../layouts'
+import { axios } from '../../services/axios'
+import { AxiosError } from 'axios'
 
 export const DashboardContainer: React.FC = () => {
   const { profile, auth } = useSelector((state) => state)
@@ -13,11 +15,27 @@ export const DashboardContainer: React.FC = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const fetchData = async () => {
-      await dispatch(fetchProfile())
+    if (auth.token) {
+      const fetchData = async () => {
+        await dispatch(getProfile())
+      }
+      fetchData()
     }
-    fetchData()
-  }, [dispatch])
+  }, [auth.token, dispatch])
+
+  useEffect(() => {
+    axios.interceptors.response.use(null, (error) => {
+      if (error instanceof AxiosError) {
+        console.warn(error, 'error')
+
+        if (error.response?.status !== 401) return
+
+        localStorage.removeItem('token')
+
+        navigate('/signin')
+      }
+    })
+  }, [navigate])
 
   useEffect(() => {
     const token = localStorage.getItem('token')

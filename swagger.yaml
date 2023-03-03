@@ -211,17 +211,6 @@ definitions:
         format: currency
       description:
         type: string
-      transactions:
-        type: array
-        items:
-          type: object
-          properties: 
-            id: 
-              type: string
-              description: "transaction id"
-            ref:
-              type: string
-              example: "transaction"
   Account:
     type: object
     properties:

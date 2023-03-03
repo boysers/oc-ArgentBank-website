@@ -1,27 +1,37 @@
 import './style.scss'
 import { useEffect, useRef, useCallback, useState } from 'react'
 import { updateUserName } from '../../../../redux/profileSlice'
-import { wait } from '../../../../utils'
 import { Loader } from '../../../../components'
 import { useDispatch, useSelector } from '../../../../hooks'
+import { modifyProfile } from '../../../../services/putProfile'
 
 type UserSettingsProps = { onClose: () => void }
 
 export const UserSettings: React.FC<UserSettingsProps> = ({ onClose }) => {
   const [loading, setLoading] = useState(false)
-  const profile = useSelector((state) => state.profile)
+  const { profile, auth } = useSelector((state) => state)
   const dispatch = useDispatch()
   const input = useRef<HTMLInputElement>(null)
 
   const onClickUpdateUserName = useCallback(async () => {
     if (input.current !== null && input.current.value !== profile.userName) {
       setLoading(true)
-      await wait(1500)
+
+      const response = await modifyProfile(
+        { userName: input.current.value },
+        auth.token
+      )
+
       setLoading(false)
-      dispatch(updateUserName(input.current.value))
+
+      if (response.body.userName) {
+        dispatch(updateUserName(response.body.userName))
+      } else {
+        dispatch(updateUserName(input.current.value))
+      }
     }
     onClose()
-  }, [dispatch, onClose, profile.userName])
+  }, [auth.token, dispatch, onClose, profile.userName])
 
   useEffect(() => {
     if (input.current) {

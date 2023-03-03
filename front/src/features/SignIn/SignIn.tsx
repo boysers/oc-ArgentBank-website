@@ -1,10 +1,10 @@
-import { MouseEvent, useRef, useState } from 'react'
+import { MouseEvent, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './SignIn.module.scss'
-import { wait } from '../../utils'
 import { login } from '../../redux/authSlice'
-import { useDispatch } from '../../hooks'
+import { useDispatch, useSelector } from '../../hooks'
 import { Loader } from '../../components'
+import { postLogin } from '../../services/postLogin'
 
 export const SignIn: React.FC = () => {
   const [error, setError] = useState<string>('')
@@ -16,6 +16,7 @@ export const SignIn: React.FC = () => {
 
   const navigate = useNavigate()
 
+  const errorMessage = useSelector((state) => state.profile.errorMessage)
   const dispatch = useDispatch()
 
   const handleLogin = async (e: MouseEvent) => {
@@ -33,11 +34,17 @@ export const SignIn: React.FC = () => {
 
     setLoading(true)
 
-    await wait(1500)
+    const response = await postLogin(formData)
 
     setLoading(false)
 
-    const token = 'myFakeToken'
+    if (response === undefined) {
+      setError('An error occurred')
+      return
+    }
+
+    let token = 'myFakeToken'
+    token = response.body.token
 
     if (rememberMe.current?.checked === true) {
       localStorage.setItem('token', token)
@@ -47,6 +54,10 @@ export const SignIn: React.FC = () => {
 
     navigate('/dashboard/profile')
   }
+
+  useEffect(() => {
+    setError(errorMessage)
+  }, [errorMessage])
 
   return (
     <section className="sign-in-content">
