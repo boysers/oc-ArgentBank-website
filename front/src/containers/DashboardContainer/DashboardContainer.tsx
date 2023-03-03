@@ -30,6 +30,6 @@ export const DashboardContainer: React.FC = () => {
     if (!auth.isAuthenticated) {
       navigate('/signin')
     }
-  }, [auth.isAuthenticated, navigate])
+  }, [auth.isAuthenticated, dispatch, navigate])
   return <>{profile.loading ? <LoaderLayout /> : <ProtectedLayout />}</>
 }
