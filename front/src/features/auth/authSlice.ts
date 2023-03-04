@@ -16,10 +16,13 @@ const authSlice = createSlice({
 
       state.token = ''
       state.isAuthenticated = false
+    },
+    testLog: (state) => {
+      console.log(state.isAuthenticated, 'omg ça marche 😘')
     }
   }
 })
 
 export const authReducer = authSlice.reducer
 
-export const { login, logout } = authSlice.actions
+export const { login, logout, testLog } = authSlice.actions

@@ -1,12 +1,12 @@
 import { Icon, NameIcons } from '../../../../components'
 
-type FeatureProps = React.PropsWithChildren<{
+type FeatureCardProps = React.PropsWithChildren<{
   title: string
   icon: NameIcons
   content: string
 }>
 
-export const Feature: React.FC<FeatureProps> = ({ title, icon, content }) => {
+export const FeatureCard: React.FC<FeatureCardProps> = ({ title, icon, content }) => {
   return (
     <div className="feature-item">
       <Icon name={icon} className="feature-icon" />

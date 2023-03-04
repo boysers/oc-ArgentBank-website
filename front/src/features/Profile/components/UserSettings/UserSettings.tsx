@@ -1,9 +1,9 @@
 import './style.scss'
 import { useEffect, useRef, useCallback, useState } from 'react'
-import { updateUserName } from '../../../../redux/profileSlice'
 import { Loader } from '../../../../components'
-import { useDispatch, useSelector } from '../../../../hooks'
-import { modifyProfile } from '../../../../services/putProfile'
+import { useDispatch, useSelector } from '../../../../app/hook'
+import { modifyProfile } from '../../../../app/api'
+import { updateUserName } from '../../profileSlice'
 
 type UserSettingsProps = { onClose: () => void }
 
@@ -35,7 +35,7 @@ export const UserSettings: React.FC<UserSettingsProps> = ({ onClose }) => {
 
   useEffect(() => {
     if (input.current) {
-      input.current.value = profile.userName
+      input.current.value = profile.userName ?? ''
     }
   }, [profile.userName])
 
@@ -52,7 +52,7 @@ export const UserSettings: React.FC<UserSettingsProps> = ({ onClose }) => {
           <input
             type="text"
             name="firstname"
-            value={profile.firstName}
+            value={profile.firstName ?? ''}
             readOnly
             disabled
           />
@@ -62,7 +62,7 @@ export const UserSettings: React.FC<UserSettingsProps> = ({ onClose }) => {
           <input
             type="text"
             name="lastname"
-            value={profile.lastName}
+            value={profile.lastName ?? ''}
             readOnly
             disabled
           />

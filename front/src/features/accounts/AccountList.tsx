@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
-import { AccountCard } from '../../../../components'
-import bankAccount from '../../../../datas/bankAccount.json'
+import bankAccount from '../../assets/json/bankAccount.json'
+import { AccountCard } from './components/AccountCard/AccountCard'
 
 export const AccountList: React.FC = () => {
   const navigate = useNavigate()

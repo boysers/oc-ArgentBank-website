@@ -1,5 +1,5 @@
-import { Feature } from './components'
-import featureList from '../../datas/featureList.json'
+import { FeatureCard } from './components'
+import featureList from '../../assets/json/featureList.json'
 import { NameIcons } from '../../components'
 
 export const Home: React.FC = () => {
@@ -17,7 +17,7 @@ export const Home: React.FC = () => {
       <section className="features">
         <h2 className="sr-only">Features</h2>
         {featureList.map(({ id, title, icon, content }) => (
-          <Feature
+          <FeatureCard
             key={id}
             title={title}
             icon={icon as NameIcons}

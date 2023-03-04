@@ -1,6 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { fetchProfile } from '../services/fetchProfile'
-import { RootState } from './store'
+import { fetchProfile } from '../../app/api'
+import { RootState } from '../../app/store'
+
+interface IInitialState {
+  email: string | null
+  firstName: string | null
+  lastName: string | null
+  userName: string | null
+  loading: boolean
+  errorMessage: string | null
+}
 
 export const getProfile = createAsyncThunk(
   'profile/getProfile',
@@ -13,13 +22,13 @@ export const getProfile = createAsyncThunk(
   }
 )
 
-const initialState = {
-  email: '',
-  firstName: '',
-  lastName: '',
-  userName: '',
+const initialState: IInitialState = {
+  email: null,
+  firstName: null,
+  lastName: null,
+  userName: null,
   loading: false,
-  errorMessage: ''
+  errorMessage: null
 }
 
 const profileSlice = createSlice({
@@ -34,7 +43,7 @@ const profileSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getProfile.pending, (state, action) => {
       state.loading = true
-      state.errorMessage = ''
+      state.errorMessage = null
     })
     builder.addCase(getProfile.fulfilled, (state, action) => {
       state.loading = false

@@ -1,9 +1,9 @@
 import './style.scss'
 import argentBankLogo from '../../assets/img/argentBankLogo.png'
 import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from '../../hooks'
-import { logout } from '../../redux/authSlice'
-import { resetStateProfile } from '../../redux/profileSlice'
+import { resetStateProfile } from '../../features/profile/profileSlice'
+import { useDispatch, useSelector } from '../../app/hook'
+import { logout } from '../../features/auth/authSlice'
 
 export const Navbar: React.FC = () => {
   const { auth, profile } = useSelector((state) => state)

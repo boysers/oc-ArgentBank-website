@@ -1,13 +1,13 @@
 import { MouseEvent, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './SignIn.module.scss'
-import { login } from '../../redux/authSlice'
-import { useDispatch, useSelector } from '../../hooks'
 import { Loader } from '../../components'
-import { postLogin } from '../../services/postLogin'
+import { login } from './authSlice'
+import { useDispatch, useSelector } from '../../app/hook'
+import { postLogin } from '../../app/api'
 
 export const SignIn: React.FC = () => {
-  const [error, setError] = useState<string>('')
+  const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
 
   const email = useRef<HTMLInputElement>(null)
@@ -38,7 +38,7 @@ export const SignIn: React.FC = () => {
 
     setLoading(false)
 
-    if (response === undefined) {
+    if (!response) {
       setError('An error occurred')
       return
     }

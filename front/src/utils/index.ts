@@ -1,1 +1,1 @@
-export { wait } from './wait/wait'
+export { wait } from './wait'

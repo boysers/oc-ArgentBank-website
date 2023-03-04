@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { useSelector } from '../../hooks'
-import { AccountList, UserSettings } from './components'
+import { useSelector } from '../../app/hook'
+import { UserSettings } from './components'
 
 export const Profile: React.FC = () => {
   const [isOpenSettings, setIsOpenSettings] = useState(false)
@@ -24,7 +24,6 @@ export const Profile: React.FC = () => {
           </>
         )}
       </div>
-      <AccountList />
     </>
   )
 }

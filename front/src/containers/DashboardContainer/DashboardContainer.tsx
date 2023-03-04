@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from '../../hooks'
-import { getProfile } from '../../redux/profileSlice'
-import { login } from '../../redux/authSlice'
 import { LoaderLayout, ProtectedLayout } from '../../layouts'
-import { axios } from '../../services/axios'
 import { AxiosError } from 'axios'
+import { login } from '../../features/auth/authSlice'
+import { useDispatch, useSelector } from '../../app/hook'
+import { api } from '../../app/api'
+import { getProfile } from '../../features/profile/profileSlice'
 
 export const DashboardContainer: React.FC = () => {
   const { profile, auth } = useSelector((state) => state)
@@ -24,7 +24,7 @@ export const DashboardContainer: React.FC = () => {
   }, [auth.token, dispatch])
 
   useEffect(() => {
-    axios.interceptors.response.use(null, (error) => {
+    api.interceptors.response.use(null, (error) => {
       if (error instanceof AxiosError) {
         console.warn(error, 'error')
 
