@@ -1,56 +1,32 @@
 import { Navigate, RouteObject } from 'react-router-dom'
-import { DashboardContainer, HomeContainer } from '../containers'
-import { AccountList } from '../features/accounts/AccountList'
-import { SingleAccount } from '../features/accounts/SingleAccount'
-import { logout, testLog } from '../features/auth/authSlice'
-import { SignIn } from '../features/auth/SignIn'
-import { Home } from '../features/home/Home'
-import { Profile } from '../features/profile/Profile'
-import { api } from './api'
-import { store } from './store'
+import { SingleAccount } from '../features/accounts'
+import { authLoader, SignIn } from '../features/auth'
+import { Home, homeLoader } from '../features/home'
+import { RootLayout } from '../layouts'
+import { Dashboard, ProfilePage } from '../pages'
 
 export const routes: RouteObject[] = [
   {
     path: '/',
-    element: <HomeContainer />,
+    element: <RootLayout />,
+    loader: homeLoader,
+    errorElement: <Navigate to="/dashboard" />,
     children: [
       {
         index: true,
         element: <Home />
       },
       {
-        path: 'signin',
+        path: 'sign-in',
         element: <SignIn />
       }
     ]
   },
   {
     path: 'dashboard',
-    element: <DashboardContainer />,
-    loader: () => {
-      api.interceptors.response.use(
-        (response) => {
-          console.log(response, 'dashboard : response interceptor')
-
-          if (response.status === 200) {
-            store.dispatch((dispatch) => {
-              dispatch(testLog())
-            })
-          }
-
-          return response
-        },
-        (error) => {
-          console.log(error, 'dashboard : error interceptor')
-          store.dispatch((dispatch) => {
-            dispatch(logout())
-          })
-          // if (error instanceof AxiosError) { }
-        }
-      )
-
-      return null
-    },
+    element: <Dashboard />,
+    loader: authLoader,
+    errorElement: <Navigate to="/sign-in" />,
     children: [
       {
         index: true,
@@ -58,12 +34,7 @@ export const routes: RouteObject[] = [
       },
       {
         path: 'profile',
-        element: (
-          <>
-            <Profile />
-            <AccountList />
-          </>
-        )
+        element: <ProfilePage />
       },
       {
         path: 'account/:id',

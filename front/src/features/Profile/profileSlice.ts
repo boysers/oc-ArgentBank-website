@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { fetchProfile } from '../../app/api'
-import { RootState } from '../../app/store'
+import { fetchProfile } from './profileApi'
 
 interface IInitialState {
   email: string | null
@@ -13,12 +12,9 @@ interface IInitialState {
 
 export const getProfile = createAsyncThunk(
   'profile/getProfile',
-  async (_, { getState }) => {
-    const { auth } = getState() as RootState
-
-    const profile = await fetchProfile(auth.token)
-
-    return { ...profile.body }
+  async () => {
+    const profile = await fetchProfile()
+    return { ...profile }
   }
 )
 

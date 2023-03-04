@@ -2,8 +2,7 @@ import './style.scss'
 import { useNavigate, useParams } from 'react-router-dom'
 import bankAccount from '../../assets/json/bankAccount.json'
 import { Icon } from '../../components'
-import { AccountCard } from './components/AccountCard/AccountCard'
-import { TransactionList } from './components'
+import { AccountCard, TransactionList } from './components'
 
 export const SingleAccount: React.FC = () => {
   const navigate = useNavigate()

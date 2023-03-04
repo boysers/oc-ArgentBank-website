@@ -1,13 +1,12 @@
-import { MouseEvent, useEffect, useRef, useState } from 'react'
+import { MouseEvent, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './SignIn.module.scss'
 import { Loader } from '../../components'
-import { login } from './authSlice'
+import { login, setErrorAuth } from './authSlice'
 import { useDispatch, useSelector } from '../../app/hook'
-import { postLogin } from '../../app/api'
+import { postLogin } from './authApi'
 
 export const SignIn: React.FC = () => {
-  const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
 
   const email = useRef<HTMLInputElement>(null)
@@ -16,16 +15,16 @@ export const SignIn: React.FC = () => {
 
   const navigate = useNavigate()
 
-  const errorMessage = useSelector((state) => state.profile.errorMessage)
+  const errorAuth = useSelector((state) => state.auth.errorAuth)
   const dispatch = useDispatch()
 
   const handleLogin = async (e: MouseEvent) => {
     e.preventDefault()
 
     if (!email.current?.value || !password.current?.value) {
-      setError('Missing email or password')
+      dispatch(setErrorAuth('Missing email or password'))
       return
-    } else if (error !== '') setError('')
+    } else if (errorAuth !== '') dispatch(setErrorAuth(null))
 
     const formData = {
       email: email.current?.value,
@@ -39,7 +38,7 @@ export const SignIn: React.FC = () => {
     setLoading(false)
 
     if (!response) {
-      setError('An error occurred')
+      dispatch(setErrorAuth('An error occurred'))
       return
     }
 
@@ -54,10 +53,6 @@ export const SignIn: React.FC = () => {
 
     navigate('/dashboard/profile')
   }
-
-  useEffect(() => {
-    setError(errorMessage)
-  }, [errorMessage])
 
   return (
     <section className="sign-in-content">
@@ -76,7 +71,7 @@ export const SignIn: React.FC = () => {
           <input type="checkbox" id="remember-me" ref={rememberMe} />
           <label htmlFor="remember-me">Remember me</label>
         </div>
-        {error && <p className={styles.error}>{error}</p>}
+        {errorAuth && <p className={styles.error}>{errorAuth}</p>}
         {loading && (
           <div className={styles.loaderContainer}>
             <Loader size="small" />

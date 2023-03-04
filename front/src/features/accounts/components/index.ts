@@ -1,3 +1,2 @@
 export { TransactionList } from './TransactionList/TransactionList'
-
-export { AccountList } from '../AccountList'
+export { AccountCard } from './AccountCard/AccountCard'
