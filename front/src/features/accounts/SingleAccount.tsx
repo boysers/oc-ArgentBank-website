@@ -1,16 +1,13 @@
 import './style.scss'
-import { useNavigate, useParams } from 'react-router-dom'
-import bankAccount from '../../assets/json/bankAccount.json'
+import { useNavigate } from 'react-router-dom'
 import { Icon } from '../../components'
 import { AccountCard, TransactionList } from './components'
+import { Account } from '../../types'
+import { useLoaderData } from '../../app/hook'
 
 export const SingleAccount: React.FC = () => {
+  const account = useLoaderData<Account>()
   const navigate = useNavigate()
-  const params = useParams() as { id: string }
-  const account = bankAccount.accounts.find(
-    (account) => params.id === account.id
-  )
-  if (!account) throw new Error('account not found')
   return (
     <>
       <AccountCard {...account} className="AccountCard">

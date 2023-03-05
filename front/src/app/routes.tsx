@@ -1,5 +1,5 @@
 import { Navigate, RouteObject } from 'react-router-dom'
-import { SingleAccount } from '../features/accounts'
+import { SingleAccount, singleAccountLoader } from '../features/accounts'
 import { authLoader, SignIn } from '../features/auth'
 import { Home, homeLoader } from '../features/home'
 import { RootLayout } from '../layouts'
@@ -38,7 +38,9 @@ export const routes: RouteObject[] = [
       },
       {
         path: 'account/:id',
-        element: <SingleAccount />
+        element: <SingleAccount />,
+        loader: singleAccountLoader,
+        errorElement: <Navigate to="/dashboard" />
       }
     ]
   }
