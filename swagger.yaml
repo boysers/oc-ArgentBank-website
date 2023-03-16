@@ -101,33 +101,50 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /user/accounts:
+  /accounts:
     get:
       security:
         - Bearer: []
       tags:
-        - User Module
+        - Account Module
       summary: User Accounts API
-      description: API for getting a user accounts
+      description: API for getting accounts
       produces:
         - application/json
       responses:
         '200':
-          description: User transactions history retrieved successfully
+          description: User transactions history retrieved successfully.
           schema:
-            type: array
-            items: 
-              $ref: '#/definitions/UserAccounts'
+            type: object
+            properties:
+              status:
+                type: number
+              message: 
+                type: string
+              body: 
+                type: array
+                items: 
+                  $ref: '#/definitions/UserAccounts'
+        '401':
+          description: The request requires user authentication.
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
+        '404':
+          description: The requested resource could not be found on the server.
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
         '500':
-          description: Internal Server Error
-  /user/accounts/{accountId}:
+          description: Internal Server Error.
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
+  /accounts/{accountId}:
     get:
       security:
         - Bearer: []
       tags:
-        - User Module
+        - Account Module
       summary: User Account API
-      description: API for getting a account
+      description: API for getting a account.
       produces:
         - application/json
       parameters:
@@ -138,17 +155,34 @@ paths:
           description: The ID of the account to return.
       responses:
         '200':
-          description: Account retrieved successfully
+          description: Account retrieved successfully.
           schema:
-            $ref: '#/definitions/Account'
+            type: object
+            properties:
+              status:
+                type: number
+              message: 
+                type: string
+              body: 
+                $ref: '#/definitions/Account'
+        '401':
+          description: 	The request requires user authentication.
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
+        '404':
+          description: The requested resource could not be found on the server.
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
         '500':
-          description: Internal Server Error
-  /user/accounts/{accountId}/{transactionId}:
+          description: Internal Server Error.
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
+  /accounts/{accountId}/{transactionId}:
     put:
       security:
         - Bearer: []
       tags:
-        - User Module
+        - Account Module
       summary: User Account Transaction API
       description: API for edit note a transaction
       produces:
@@ -186,8 +220,18 @@ paths:
                 type: string
               body: 
                 $ref: '#/definitions/Transaction'
+        '401':
+          description: The request requires user authentication.
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
+        '404':
+          description: The requested account could not be found on the server.
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
         '500':
-          description: Internal Server Error
+          description: Internal Server Error.
+          schema:
+            $ref: "#/definitions/ApiErrorResponse"
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -296,4 +340,10 @@ definitions:
       note:
         type: string
         description: additional user notes
-        
+  ApiErrorResponse:
+    type: object
+    properties:
+      status:
+        type: number
+      message:
+        type: string
