@@ -16,3 +16,10 @@
 .AccountCard {
   margin: 2rem auto;
 }
+
+@media screen and (max-width: 660px) {
+  .AccountCard {
+    margin: 2rem auto;
+    width: 90%;
+  }
+}

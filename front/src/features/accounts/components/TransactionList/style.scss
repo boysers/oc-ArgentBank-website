@@ -25,3 +25,26 @@
     }
   }
 }
+
+@media screen and (max-width: 660px) {
+  .TransactionList {
+    font-size: 12px;
+    width: 90%;
+  }
+
+  .TransactionList table td,
+  .TransactionList table th {
+    padding: 0 0.2rem;
+  }
+
+  .TransactionCard__Icon > img {
+    width: 12px;
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .TransactionList {
+    font-size: 10px;
+  }
+}

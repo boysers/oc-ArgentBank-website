@@ -1,7 +1,7 @@
 import { Navigate, RouteObject } from 'react-router-dom'
 import { SingleAccount, singleAccountLoader } from '../features/accounts'
 import { authLoader, SignIn } from '../features/auth'
-import { Home, homeLoader } from '../features/home'
+import { Home } from '../features/home'
 import { RootLayout } from '../layouts'
 import { Dashboard, ProfilePage } from '../pages'
 
@@ -9,7 +9,7 @@ export const routes: RouteObject[] = [
   {
     path: '/',
     element: <RootLayout />,
-    loader: homeLoader,
+    // loader: homeLoader,
     errorElement: <Navigate to="/dashboard" />,
     children: [
       {

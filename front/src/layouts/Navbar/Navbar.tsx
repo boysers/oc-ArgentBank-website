@@ -11,9 +11,12 @@ export const Navbar: React.FC = () => {
 
   let isAuth = auth.isAuthenticated
 
+  // const link = isAuth ? '/dashboard' : '/'
+  const link = '/'
+
   return (
     <nav className="main-nav">
-      <Link to={isAuth ? '/dashboard' : '/'} className="main-nav-logo">
+      <Link to={link} className="main-nav-logo">
         <img
           className="main-nav-logo-image"
           src={argentBankLogo}

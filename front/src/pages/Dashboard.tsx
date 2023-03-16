@@ -18,7 +18,8 @@ export const Dashboard: React.FC = () => {
 
   useEffect(() => {
     if (!auth.isAuthenticated) {
-      navigate('/sign-in')
+      // navigate('/sign-in')
+      navigate('/')
     }
   }, [auth.isAuthenticated, navigate])
 

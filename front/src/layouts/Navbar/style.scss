@@ -1,0 +1,15 @@
+@media screen and (max-width: 400px) {
+  .main-nav {
+    padding: 5px;
+  }
+}
+
+@media screen and (max-width: 370px) {
+  .main-nav {
+    font-size: 12px;
+
+    img {
+      width: 170px;
+    }
+  }
+}
