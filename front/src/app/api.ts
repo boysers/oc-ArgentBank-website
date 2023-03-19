@@ -25,10 +25,10 @@ api.interceptors.response.use(
     store.dispatch((dispatch) => {
       if (error.response?.status === 401) {
         dispatch(setErrorAuth(error.response?.data.message))
+        dispatch(logout())
       } else {
         dispatch(setErrorAuth('server error'))
       }
-      dispatch(logout())
     })
     return Promise.reject(error)
   }
