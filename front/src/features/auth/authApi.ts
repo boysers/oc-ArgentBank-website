@@ -5,6 +5,6 @@ export const postLogin = async (data: { email: string; password: string }) => {
     const response = await api.post('/user/login', data)
     return response?.data
   } catch (error) {
-    console.error(error)
+    return error
   }
 }

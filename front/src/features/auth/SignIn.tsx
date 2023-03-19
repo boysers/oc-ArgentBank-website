@@ -5,6 +5,7 @@ import { Loader } from '../../components'
 import { login, setErrorAuth } from './authSlice'
 import { useDispatch, useSelector } from '../../app/hook'
 import { postLogin } from './authApi'
+import { AxiosError } from 'axios'
 
 export const SignIn: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false)
@@ -31,27 +32,30 @@ export const SignIn: React.FC = () => {
       password: password.current?.value
     }
 
-    setLoading(true)
+    try {
+      setLoading(true)
 
-    const response = await postLogin(formData)
+      const response = await postLogin(formData)
 
-    setLoading(false)
+      if (response instanceof AxiosError) {
+        throw new Error(response.message)
+      }
 
-    if (!response) {
+      const token = response.body.token
+
+      if (rememberMe.current?.checked === true) {
+        localStorage.setItem('token', token)
+      }
+
+      dispatch(login(token))
+
+      navigate('/dashboard/profile')
+    } catch (error) {
+      console.warn(error)
       dispatch(setErrorAuth('An error occurred'))
-      return
+    } finally {
+      setLoading(false)
     }
-
-    let token = 'myFakeToken'
-    token = response.body.token
-
-    if (rememberMe.current?.checked === true) {
-      localStorage.setItem('token', token)
-    }
-
-    dispatch(login(token))
-
-    navigate('/dashboard/profile')
   }
 
   return (
