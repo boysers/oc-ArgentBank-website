@@ -24,7 +24,7 @@ api.interceptors.response.use(
   (error) => {
     store.dispatch((dispatch) => {
       if (error.response?.status === 401) {
-        dispatch(setErrorAuth('jwt expired'))
+        dispatch(setErrorAuth(error.response?.data.message))
       } else {
         dispatch(setErrorAuth('server error'))
       }

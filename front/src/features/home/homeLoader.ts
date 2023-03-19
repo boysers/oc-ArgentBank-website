@@ -1,10 +1,20 @@
-import { json, LoaderFunction } from 'react-router-dom'
+import { LoaderFunction } from 'react-router-dom'
 import { store } from '../../app/store'
+import { login } from '../auth'
+import { getProfile } from '../profile'
 
 export const homeLoader: LoaderFunction = () => {
-  const { isAuthenticated } = store.getState().auth
+  const token = localStorage.getItem('token')
 
-  if (isAuthenticated || localStorage.getItem('token')) throw json(null)
+  if (token) {
+    store.dispatch((dispatch) => {
+      dispatch(login(token))
+    })
+
+    store.dispatch(async (dispatch) => {
+      await dispatch(getProfile())
+    })
+  }
 
   return null
 }
