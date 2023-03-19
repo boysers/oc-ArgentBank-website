@@ -210,7 +210,7 @@ paths:
                 description: "note user"
       responses:
         '200':
-          description: Account retrieved successfully
+          description: Note modified successfully
           schema:
             type: object
             properties:
