@@ -30,5 +30,6 @@ api.interceptors.response.use(
       }
       dispatch(logout())
     })
+    return Promise.reject(error)
   }
 )
