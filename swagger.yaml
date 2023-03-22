@@ -208,6 +208,8 @@ paths:
               note:
                 type: string
                 description: "note user"
+              category:
+                type: string
       responses:
         '200':
           description: Note modified successfully
