@@ -28,7 +28,7 @@ export const Navbar: React.FC = () => {
         {isAuth ? (
           <>
             <Link to="/dashboard/profile" className="main-nav-item">
-              <i className="fa fa-user-circle"></i> {profile.firstName}
+              <i className="fa fa-user-circle"></i> {profile.userName}
             </Link>
             <Link
               to="/"
