@@ -4,6 +4,7 @@ import { authLoader, SignIn } from '../features/auth'
 import { Home, homeLoader } from '../features/home'
 import { RootLayout } from '../layouts'
 import { Dashboard, ProfilePage } from '../pages'
+import { authRedirectLoader } from '../features/auth/authRedirectLoader'
 
 export const routes: RouteObject[] = [
   {
@@ -18,7 +19,8 @@ export const routes: RouteObject[] = [
       },
       {
         path: 'sign-in',
-        element: <SignIn />
+        element: <SignIn />,
+        loader: authRedirectLoader
       }
     ]
   },
